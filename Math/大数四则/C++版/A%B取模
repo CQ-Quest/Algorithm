@@ -1,0 +1,12 @@
+# A%B
+        string a;
+	int b;
+	while(cin>>a>>b)
+	{
+		int ans=0;
+		for(int i=0;i<a.length();i++)
+		{
+			ans=(ans*10+a[i]-'0')%b;
+		}
+		cout<<ans<<endl;
+	}

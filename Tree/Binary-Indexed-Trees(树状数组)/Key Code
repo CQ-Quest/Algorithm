@@ -1,0 +1,49 @@
+lowbit函数：x&-x
+思想：lowbit函数找的是二进制最右边的1。计算机机器语言中，-x实际上是x的补码，补码是x取反加1。
+举个例子 x = 00001100,  -x = 11110011 + 1 = 11110100。通过按位取余即可取到最右边的1了；
+
+树状数组模板,Key code:
+
+// 树状数组查询前缀和
+int ask(int x) {
+	int ans = 0;
+	for (; x; x -= x & -x) ans += c[x];
+	return ans;
+}
+
+// 树状数组单点增加
+void add(int x, int y) {
+	for (; x <= N; x += x & -x) c[x] += y;
+}
+
+// 树状数组求逆序对
+for (int i = n; i; i--) {
+	ans += ask(a[i]);
+	add(a[i], 1);
+}
+
+//区间最值差
+int trM[N],w[N],M,m;
+vector<int>trm(N,1e7);
+int getsum(int l, int r)
+{
+     M=0,m=1e7;
+    int len = r - l + 1;
+    while (len && r)
+    {
+        if (lowbit(r) <= len)
+        {
+            M = max(trM[r], M);
+            m = min(trm[r], m);
+            len -= lowbit(r);
+            r -= lowbit(r);
+        }
+        else
+        {
+            M = max(w[r], M);//与原数组对比
+            m = min(w[r], m);
+            len--, r--;
+        }
+    }
+    return M-m;
+}
